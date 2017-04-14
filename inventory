@@ -1,0 +1,1 @@
+debian-elk-test ansible_ssh_user=vagrant ansible_host=10.0.20.87 ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q beast.home"'

@@ -1,0 +1,43 @@
+- hosts: all
+  become: true
+
+  vars:
+    logserver:
+      port: 10514
+      ip: 10.0.20.87
+
+  tasks:
+    - name: "add iptables forward rule for logs to tcp/{{logserver.port}}"
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: tcp
+        match: tcp
+        destination_port: 514
+        jump: REDIRECT
+        to_ports: "{{logserver.port}}"
+        comment: "Redirect log trafic from tcp/514 to tcp/{{logserver.port}}"
+
+    - name: "add iptables forward rule for logs to udp/{{logserver.port}}"
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: udp
+        match: udp
+        destination_port: 514
+        jump: REDIRECT
+        to_ports: "{{logserver.port}}"
+        comment: "Redirect log trafic from tcp/514 to tcp/{{logserver.port}}"
+
+    - name: config rsyslog to use logserver
+      template:
+        src: rsyslog.conf.j2
+        dest: /etc/rsyslog.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart rsyslog
+
+  handlers:
+    - name: restart rsyslog
+      service: name=rsyslog state=restarted
