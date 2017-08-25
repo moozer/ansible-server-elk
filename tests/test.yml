@@ -1,0 +1,23 @@
+- hosts: serverA
+  become: true
+
+  pre_tasks:
+  - name: update apt if applicable
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  tasks:
+  - debug: msg="update rsyslog"
+
+- hosts: logserver
+  become: true
+
+  pre_tasks:
+  - name: update apt if applicable
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  roles:
+  - {role: elkstack }
