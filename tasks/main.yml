@@ -7,3 +7,5 @@
 
 - include: install_elasticsearch.yml
 - include: install_rsyslog_local.yml
+
+- include: install_kibana.yml
