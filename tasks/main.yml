@@ -1,0 +1,4 @@
+- debug: msg="server-elk role"
+
+- include: apt_repos.yml
+- include: install_elasticsearch.yml

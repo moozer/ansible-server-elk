@@ -1,0 +1,15 @@
+- name: Install APT HTTPS transport
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Install the repository signing key for elastic.co
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Enable the Elasticsearch repository
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+    state: present
+    update_cache: true

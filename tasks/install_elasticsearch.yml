@@ -1,0 +1,16 @@
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: latest
+
+- name: Install new Elasticsearch configuration file
+  template:
+    src: ./elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify:
+    - restart elasticsearch
+
+- name: Enable the Elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: yes
