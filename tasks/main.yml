@@ -1,4 +1,9 @@
 - debug: msg="server-elk role"
 
 - include: apt_repos.yml
+
+- include: install_openjdk.yml
+- include: install_logstash.yml
+
 - include: install_elasticsearch.yml
+- include: install_rsyslog_local.yml

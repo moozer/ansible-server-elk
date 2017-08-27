@@ -1,7 +1,7 @@
 - name: Install Logstash
   apt:
     name: logstash
-    state: latest
+    state: present
 
 - name: Install new Logstash configuration file
   template:
@@ -14,4 +14,3 @@
   systemd:
     name: logstash
     enabled: yes
-    state: started
